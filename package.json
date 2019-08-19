@@ -1,0 +1,22 @@
+{
+  "name": "native-nodejs-addons-presentation",
+  "version": "2.0.0",
+  "description": "A presentation made with Reveal.js to demonostrate writing native Node.js addons in C++.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qheaden/2016-building-native-addons-for-nodejs.git"
+  },
+  "author": "Quentin Headen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qheaden/2016-building-native-addons-for-nodejs/issues"
+  },
+  "homepage": "https://github.com/qheaden/2016-building-native-addons-for-nodejs#readme",
+  "dependencies": {
+    "reveal.js": "^3.8.0"
+  }
+}
