@@ -20,9 +20,137 @@
             link.href = window.location.search.match( /print-pdf/gi ) ? 'node_modules/reveal.js/css/print/pdf.css' : 'node_modules/reveal.js/css/print/paper.css';
             document.getElementsByTagName( 'head' )[0].appendChild( link );
         </script>
+
+        <!-- Custom Styling For This Presentation -->
+        <style type="text/css">
+            section > ul {
+                display: block !important;
+            }
+
+            section > ul > li {
+                padding-bottom: 20px !important;
+            }
+
+            h1, h2, h3, h4 {
+                padding-bottom: 20px !important;
+                text-transform: none !important;
+            }
+        </style>
     </head>
     <body>
         <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h2>Creating Native Modules for Node.js</h2>
+                </section>
+                <section>
+                    <h3>What Are JavaScript Engines?</h3>
+                    <p>
+                        <ul>
+                            <li>Provide an execution environment for JS code</li>
+                            <li>Built in lower-level languages such as C/C++</li>
+                            <li>Many variations are available today</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>Major JS Engines Today</h3>
+                    <p>
+                        <ul>
+                            <li>SpiderMonkey - Mozilla Firefox</li>
+                            <li>Chakra - Internet Explorer 9 through 11</li>
+                            <li>ChakraCore - Edge</li>
+                            <li>V8 - Google Chrome</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h3>These JS Engines Are Embeddable</h3>
+                    <p>
+                        <ul>
+                            <li>Web Browsers (Of Course!)</li>
+                            <li>Game Engines</li>
+                            <li>Other Scriptable Tools</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h2>Node Has A</h2>
+                    <p>
+                        <img src="images/v8-logo.png" width="256" />
+                    </p>
+                </section>
+                <section>
+                    <h2>Node.js Provides A C++ API</h2>
+                </section>
+                <section>
+                    <h2>Hello World Module C++ Code</h2>
+                </section>
+                <section>
+                    <pre>
+                        <code class="cpp" data-trim data-noescape>
+                                // hello.cpp
+
+                                #include &lt;node.h&gt;
+
+                                using v8::FunctionCallbackInfo;
+                                using v8::Isolate;
+                                using v8::Local;
+                                using v8::Object;
+                                using v8::String;
+                                using v8::Value;
+
+                                void GetHello(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
+                                    Isolate* isolate = args.GetIsolate();
+
+                                    args.GetReturnValue().Set(String::NewFromUtf8(isolate, "Hello World!"));
+                                }
+
+                                void Initialize(Local&lt;Object&gt; exports) {
+                                    NODE_SET_METHOD(exports, "getHello", GetHello);
+                                }
+
+                                NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Build Using Gyp</h2>
+                    <pre>
+                        <code class="json" data-trim data-noescape>
+                            {
+                                "targets": [
+                                    {
+                                        "target_name": "hello",
+                                        "sources": [ "hello.cpp" ]
+                                    }
+                                ]
+                            }
+                        </code>
+                    </pre>
+                    <pre>
+                        <code class="shell" data-trim data-noescape>
+                            $ node-gyp init
+                            $ node-gyp build
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Import the Module</h2>
+                    <pre>
+                        <code class="javascript" data-trim data-noescape>
+                            // test.js
+
+                            var helloModule = require('./build/Release/hello.node');
+                            console.log(helloModule.getHello());
+                        </code>
+                        <code class="shell" data-trim data-noescape>
+                            $ node ./test.js
+                            $ Hello World!
+                        </code>
+                    </pre>
+                </section>
+            </div>
         </div>
 
         <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
@@ -32,7 +160,6 @@
             // More info https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
                 history: true,
-
                 // More info https://github.com/hakimel/reveal.js#dependencies
                 dependencies: [
                     { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
