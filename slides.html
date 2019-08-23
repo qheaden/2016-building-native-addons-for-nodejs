@@ -27,10 +27,6 @@
                 display: block !important;
             }
 
-            section > ul {
-                padding-left: 500px;
-            }
-
             section > ul > li {
                 padding-bottom: 20px !important;
             }
@@ -88,69 +84,59 @@
                     <h2>Node.js Provides A C++ API</h2>
                 </section>
                 <section>
-                    <h2>Hello World Module C++ Code</h2>
+                    <h2>Example 1 - Hello World</h2>
+                    <p>
+                        <ul>
+                            <li><a href="examples/lesson01-hello-world/hello.cpp">Module C++</a></li>
+                            <li><a href="examples/lesson01-hello-world/binding.gyp">GYP Build Definition</a></li>
+                            <li><a href="examples/lesson01-hello-world/test.js">JavaScript Test Code</a></li>
+                        </ul>
+                    </p>
                 </section>
                 <section>
-                    <pre>
-                        <code class="cpp stretch" data-trim data-noescape>
-                                // hello.cpp
-
-                                #include &lt;node.h&gt;
-
-                                using v8::FunctionCallbackInfo;
-                                using v8::Isolate;
-                                using v8::Local;
-                                using v8::Object;
-                                using v8::String;
-                                using v8::Value;
-
-                                void GetHello(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
-                                    Isolate* isolate = args.GetIsolate();
-
-                                    args.GetReturnValue().Set(String::NewFromUtf8(isolate, "Hello World!"));
-                                }
-
-                                void Initialize(Local&lt;Object&gt; exports) {
-                                    NODE_SET_METHOD(exports, "getHello", GetHello);
-                                }
-
-                                NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
-                        </code>
-                    </pre>
-                </section>
-                <section>
-                    <h2>Build Using Gyp</h2>
-                    <pre>
-                        <code class="json" data-trim data-noescape>
-                            {
-                                "targets": [
-                                    {
-                                        "target_name": "hello",
-                                        "sources": [ "hello.cpp" ]
-                                    }
-                                ]
-                            }
-                        </code>
-                    </pre>
+                    <h2>Build Using Node Gyp</h2>
                     <pre>
                         <code class="shell" data-trim data-noescape>
-                            $ node-gyp init
+                            > node-gyp configure
+                            > node-gyp build
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Run the Test JavaScript</h2>
+                    <pre>
+                        <code class="shell" data-trim data-noescape>
+                            > node ./test.js
+                            > Hello World!
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Example 2 - Passing Arguments</h2>
+                    <p>
+                        <ul>
+                            <li><a href="examples/lesson02-argument-passing/argpassing.cpp">Module C++</a></li>
+                            <li><a href="examples/lesson02-argument-passing/binding.gyp">GYP Build Definition</a></li>
+                            <li><a href="examples/lesson02-argument-passing/test.js">JavaScript Test Code</a></li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h2>Build Using Node Gyp</h2>
+                    <pre>
+                        <code class="shell" data-trim data-noescape>
+                            $ node-gyp configure
                             $ node-gyp build
                         </code>
                     </pre>
                 </section>
                 <section>
-                    <h2>Import the Module</h2>
+                    <h2>Run the Test JavaScript</h2>
                     <pre>
-                        <code class="javascript" data-trim data-noescape>
-                            // test.js
-
-                            var helloModule = require('./build/Release/hello.node');
-                            console.log(helloModule.getHello());
-                        </code>
                         <code class="shell" data-trim data-noescape>
-                            $ node ./test.js
-                            $ Hello World!
+                            > node ./test.js
+                            > 10 + 20 = 30
+                            > 20 + 30 + 100 + 500 = 650
                         </code>
                     </pre>
                 </section>
@@ -164,7 +150,6 @@
             // More info https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
                 history: true,
-                width: 1920,
                 // More info https://github.com/hakimel/reveal.js#dependencies
                 dependencies: [
                     { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
