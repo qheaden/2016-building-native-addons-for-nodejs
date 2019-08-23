@@ -13,10 +13,12 @@ namespace node_cpp_tutorial {
   using v8::Value;
   using v8::Exception;
   using v8::Number;
+  using v8::Context;
 
   void AddTwoNumbers(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+    Local<Context> context = isolate->GetCurrentContext();
 
     // We require at least two parameters. If we have less than that, throw an exception.
     if (args.Length() < 2) {
@@ -37,7 +39,7 @@ namespace node_cpp_tutorial {
     // Once validation is complete, we convert the first two arguments to v8::Number objects. v8::Number provides
     // a Value() method that returns the actual numerical value as a C++ double type. The double type is used because
     // the number passed in could be a whole or factional number.
-    double returnValue = args[0]->ToNumber()->Value() + args[1]->ToNumber()->Value();
+    double returnValue = args[0]->ToNumber(context).ToLocalChecked()->Value() + args[1]->ToNumber(context).ToLocalChecked()->Value();
 
     // We set the return value of the function. Since we are returning a Node.js number, we need to covert out
     // C++ double value into a Number object. We do this via the Number::New() method which takes the Isolate
@@ -49,6 +51,7 @@ namespace node_cpp_tutorial {
   void AddMultipleNumbers(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+    Local<Context> context = isolate->GetCurrentContext();
 
     // We require at least two parameters. If we have less than that, throw an exception.
     if (args.Length() < 2) {
@@ -74,7 +77,7 @@ namespace node_cpp_tutorial {
 
       // After we validate that this argument is actually a number, convert it to a v8::Number object,
       // get its C++ double value via the Value() method, and add it to sum stored in returnValue;
-      returnValue += args[i]->ToNumber()->Value();
+      returnValue += args[i]->ToNumber(context).ToLocalChecked()->Value();
     }
 
     // We set the return value of the function. Since we are returning a Node.js number, we need to covert out
