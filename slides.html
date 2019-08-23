@@ -27,6 +27,10 @@
                 display: block !important;
             }
 
+            section > ul {
+                padding-left: 500px;
+            }
+
             section > ul > li {
                 padding-bottom: 20px !important;
             }
@@ -88,7 +92,7 @@
                 </section>
                 <section>
                     <pre>
-                        <code class="cpp" data-trim data-noescape>
+                        <code class="cpp stretch" data-trim data-noescape>
                                 // hello.cpp
 
                                 #include &lt;node.h&gt;
@@ -160,6 +164,7 @@
             // More info https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
                 history: true,
+                width: 1920,
                 // More info https://github.com/hakimel/reveal.js#dependencies
                 dependencies: [
                     { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
