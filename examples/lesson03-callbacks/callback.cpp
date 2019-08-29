@@ -14,6 +14,7 @@ namespace node_cpp_tutorial {
   // want to bring these V8 objects directly into our namespace.
   using v8::FunctionCallbackInfo;
   using v8::Isolate;
+  using v8::Context;
   using v8::Local;
   using v8::Persistent;
   using v8::Object;
@@ -36,6 +37,7 @@ namespace node_cpp_tutorial {
   void SleepCallback(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+    Local<Context> context = isolate->GetCurrentContext();
 
     if (args.Length() < 2) {
         isolate->ThrowException(Exception::Error(String::NewFromUtf8(isolate, "You must pass in the sleep time and a callback function")));
@@ -52,7 +54,7 @@ namespace node_cpp_tutorial {
         return;
     }
 
-    uint32_t sleepTime = args[0]->ToUint32()->Value();
+    uint32_t sleepTime = args[0]->ToUint32(context).ToLocalChecked()->Value();
 #ifdef _WIN32
     Sleep(sleepTime);
 #else
@@ -86,6 +88,7 @@ namespace node_cpp_tutorial {
   void SleepCallbackAsync(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+    Local<Context> context = isolate->GetCurrentContext();
 
     if (args.Length() < 2) {
         isolate->ThrowException(Exception::Error(String::NewFromUtf8(isolate, "You must pass in the sleep time and a callback function")));
@@ -103,7 +106,7 @@ namespace node_cpp_tutorial {
     }
 
     WorkInfo* info = new WorkInfo();
-    info->sleepTime = args[0]->ToUint32()->Value();
+    info->sleepTime = args[0]->ToUint32(context).ToLocalChecked()->Value();
     info->request.data = info;
 
     Local<Function> callback = Local<Function>::Cast(args[1]);
@@ -112,7 +115,7 @@ namespace node_cpp_tutorial {
     uv_queue_work(uv_default_loop(), &info->request, SleepAsync, SleepAsyncComplete);
   }
 
-  void init(Local<Object> exports) {
+  void Initialize(Local<Object> exports) {
     // We register the C++ functions as methods to this addon. The second argument to
     // NODE_SET_METHOD is a string that defines what the method name will be in Node.js,
     // and the third argument is the name of the C++ function that will be called. It
@@ -123,5 +126,5 @@ namespace node_cpp_tutorial {
 
   // This is a C++ macro provided by node.h that registers the addon with
   // the V8 runtime, making it avaialble to Node.js when require'd in the code.
-  NODE_MODULE(addon, init)
+  NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
 }
