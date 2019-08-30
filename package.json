@@ -7,7 +7,8 @@
     "build-lessons": "npm run build-lesson-1 && npm run build-lesson-2 && npm run build-lesson-3",
     "build-lesson-1": "cd examples/lesson01-hello-world && node-gyp configure && node-gyp build",
     "build-lesson-2": "cd examples/lesson02-argument-passing && node-gyp configure && node-gyp build",
-    "build-lesson-3": "cd examples/lesson03-callbacks && node-gyp configure && node-gyp build"
+    "build-lesson-3": "cd examples/lesson03-callbacks && node-gyp configure && node-gyp build",
+    "deploy": "gh-pages -d ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "reveal.js": "^3.8.0"
   },
   "devDependencies": {
+    "gh-pages": "^2.1.1",
     "node-gyp": "^5.0.3"
   }
 }
