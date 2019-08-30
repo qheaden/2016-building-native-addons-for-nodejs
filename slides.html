@@ -39,6 +39,15 @@
             .white-background {
                 background-color: #ffffff !important;
             }
+
+            a, a:visited {
+                color:#43aaee !important;
+                text-decoration: underline !important;
+            }
+
+            a:hover, a:active {
+                color: #f1c40f!important;
+            }
         </style>
     </head>
     <body>
@@ -91,9 +100,9 @@
                     <h2>Example 1 - Hello World</h2>
                     <p>
                         <ul>
-                            <li><a href="examples/lesson01-hello-world/hello.cpp">Module C++</a></li>
-                            <li><a href="examples/lesson01-hello-world/binding.gyp">GYP Build Definition</a></li>
-                            <li><a href="examples/lesson01-hello-world/test.js">JavaScript Test Code</a></li>
+                            <li><a target="_blank" href="examples/lesson01-hello-world/hello.cpp">Module C++</a></li>
+                            <li><a target="_blank" href="examples/lesson01-hello-world/binding.gyp">GYP Build Definition</a></li>
+                            <li><a target="_blank" href="examples/lesson01-hello-world/test.js">JavaScript Test Code</a></li>
                         </ul>
                     </p>
                 </section>
@@ -119,9 +128,9 @@
                     <h2>Example 2 - Passing Arguments</h2>
                     <p>
                         <ul>
-                            <li><a href="examples/lesson02-argument-passing/argpassing.cpp">Module C++</a></li>
-                            <li><a href="examples/lesson02-argument-passing/binding.gyp">GYP Build Definition</a></li>
-                            <li><a href="examples/lesson02-argument-passing/test.js">JavaScript Test Code</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/argpassing.cpp">Module C++</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/binding.gyp">GYP Build Definition</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/test.js">JavaScript Test Code</a></li>
                         </ul>
                     </p>
                 </section>
@@ -139,8 +148,8 @@
                     <pre>
                         <code class="shell" data-trim data-noescape>
                             > node ./test.js
-                            > 10 + 20 = 30
-                            > 20 + 30 + 100 + 500 = 650
+                            10 + 20 = 30
+                            20 + 30 + 100 + 500 = 650
                         </code>
                     </pre>
                 </section>
@@ -163,11 +172,59 @@
                     <h2>Example 3 - Callbacks and Async</h2>
                     <p>
                         <ul>
-                            <li><a href="examples/lesson02-argument-passing/argpassing.cpp">Module C++</a></li>
-                            <li><a href="examples/lesson02-argument-passing/binding.gyp">GYP Build Definition</a></li>
-                            <li><a href="examples/lesson02-argument-passing/test.js">JavaScript Test Code</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/argpassing.cpp">Module C++</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/binding.gyp">GYP Build Definition</a></li>
+                            <li><a target="_blank" href="examples/lesson02-argument-passing/test.js">JavaScript Test Code</a></li>
                         </ul>
                     </p>
+                </section>
+                <section>
+                    <h2>Build Using Node Gyp</h2>
+                    <pre>
+                        <code class="shell" data-trim data-noescape>
+                            $ node-gyp configure
+                            $ node-gyp build
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Run the Test JavaScript</h2>
+                    <pre>
+                        <code class="shell" data-trim data-noescape>
+                            > node ./test.js
+                            Calling blocking-sleep.
+                            Done with blocking sleep.
+                            We are now past the sleepCallback call.
+
+
+                            Calling non-blocking sleep.
+                            We are now past the sleepCallbackAync call.
+                            Done with non-blocking sleep.
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Why Build Native JS Modules?</h2>
+                    <p>
+                        <ul>
+                            <li>Allows JS code to connect with lower-level APIs</li>
+                            <li>Enables briding JS with legacy native applications</li>
+                            <li>Facilitates writing speed-critical code for Node to consume</li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h2>Great Resources</h2>
+                    <p>
+                        <ul>
+                            <li><a target="_blank" href="https://v8docs.nodesource.com/">V8 Class Documentation</a></li>
+                            <li><a target="_blank" href="https://nodejs.org/api/addons.html">Official Node C++ Tutorial</a></li>
+                            <li><a target="_blank" href="http://docs.libuv.org/en/v1.x/">Libuv Documentation</a></li>
+                        </ul>
+                    </p>
+                </section>
+                <section>
+                    <h1>Questions?</h1>
                 </section>
             </div>
         </div>
