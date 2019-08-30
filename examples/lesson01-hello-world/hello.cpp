@@ -33,5 +33,7 @@ namespace node_cpp_tutorial {
 
   // This is a C++ macro provided by node.h that registers the addon with
   // the V8 runtime, making it avaialble to Node.js when require'd in the code.
+  // NODE_GYP_MODULE_NAME instructs the node-gyp build tool to name this module
+  // whatever the target name is set to in the binding.gyp file.
   NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
 }

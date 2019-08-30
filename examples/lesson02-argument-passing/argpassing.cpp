@@ -18,6 +18,12 @@ namespace node_cpp_tutorial {
   void AddTwoNumbers(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+
+    // We need to get a reference to the execution context which manages our JS objects,
+    // functions, etc. Instead of getting a direct pointer to the context, we are provided
+    // a Local<> smart pointer. Objects wrapped in a Local<> smart pointer are memory-manged
+    // by the V8 runtime. It is best practice to always handle V8 objects with smart pointer
+    // wrapper classes.
     Local<Context> context = isolate->GetCurrentContext();
 
     // We require at least two parameters. If we have less than that, throw an exception.
@@ -51,6 +57,10 @@ namespace node_cpp_tutorial {
   void AddMultipleNumbers(const FunctionCallbackInfo<Value>& args) {
     // The Isolate pointer representing the V8 JS engine instance.
     Isolate* isolate = args.GetIsolate();
+
+    // When throwing the exception, we also pass it a v8::String object containing the message
+    // we want for our exception. String::NewFromUtf8 reads the provided C string and makes it
+    // usable to the V8 runtime.
     Local<Context> context = isolate->GetCurrentContext();
 
     // We require at least two parameters. If we have less than that, throw an exception.
@@ -76,7 +86,8 @@ namespace node_cpp_tutorial {
       }
 
       // After we validate that this argument is actually a number, convert it to a v8::Number object,
-      // get its C++ double value via the Value() method, and add it to sum stored in returnValue;
+      // get the Local<> pointer wrapper to it via ToLocalChecked(), and finally get its C++ double value
+      // via the Value() method. We then take the C++ double, and add it to sum stored in returnValue.
       returnValue += args[i]->ToNumber(context).ToLocalChecked()->Value();
     }
 
@@ -98,5 +109,7 @@ namespace node_cpp_tutorial {
 
   // This is a C++ macro provided by node.h that registers the addon with
   // the V8 runtime, making it avaialble to Node.js when require'd in the code.
+  // NODE_GYP_MODULE_NAME instructs the node-gyp build tool to name this module
+  // whatever the target name is set to in the binding.gyp file.
   NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
 }
