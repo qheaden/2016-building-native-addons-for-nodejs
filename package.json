@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/qheaden/2016-building-native-addons-for-nodejs#readme",
   "dependencies": {
-    "reveal.js": "^3.8.0"
+    "reveal.js": "^3.9.2"
   },
   "devDependencies": {
     "gh-pages": "^2.1.1",
